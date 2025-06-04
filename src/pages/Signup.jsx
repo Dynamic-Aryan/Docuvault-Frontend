@@ -5,10 +5,15 @@ import API_ENDPOINTS from "../api/endpoint";
 
 function Signup() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +36,7 @@ function Signup() {
           Create Your Vault
         </h2>
 
+        {/* Name */}
         <label htmlFor="name" className="sr-only">
           Name
         </label>
@@ -43,6 +49,7 @@ function Signup() {
           required
         />
 
+        {/* Email */}
         <label htmlFor="email" className="sr-only">
           Email
         </label>
@@ -56,20 +63,43 @@ function Signup() {
           required
         />
 
+        {/* Password with toggle */}
         <label htmlFor="password" className="sr-only">
           Password
         </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Password"
-          className="w-full mb-8 px-5 py-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-          onChange={handleChange}
-          required
-          minLength={6}
-        />
+        <div className="relative w-full mb-8">
+          <input
+            id="password"
+            name="password"
+            type={showPassword ? "password" : "text"}
+            placeholder="Password"
+            className="w-full px-5 py-3 pr-12 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+            onChange={handleChange}
+            required
+            minLength={6}
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none"
+            aria-label="Toggle password visibility"
+          >
+            {showPassword ? (
+              // Eye with slash (hide)
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10a9.96 9.96 0 012.675-6.825m2.978 1.952A7.957 7.957 0 0012 5c4.418 0 8 3.582 8 8a7.97 7.97 0 01-.958 3.958m-1.694 1.548L4.222 4.222" />
+              </svg>
+            ) : (
+              // Eye (show)
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            )}
+          </button>
+        </div>
 
+        {/* Submit */}
         <button
           type="submit"
           className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl py-3 font-semibold text-white shadow-lg hover:from-indigo-600 hover:to-purple-700 transition duration-300 flex justify-center items-center gap-3"
@@ -93,6 +123,7 @@ function Signup() {
           Sign Up
         </button>
 
+        {/* Login Link */}
         <p className="mt-6 text-center text-gray-400 text-sm">
           Already have an account?{" "}
           <Link
@@ -104,6 +135,7 @@ function Signup() {
         </p>
       </form>
 
+      {/* Animation style */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
