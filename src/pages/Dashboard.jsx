@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 import Navbar from "../components/Navbar";
 import DocumentCard from "../components/DocumentCard";
+import API_ENDPOINTS from "../api/endpoint";
 
 function Dashboard() {
   const [documents, setDocuments] = useState([]);
@@ -16,7 +17,7 @@ function Dashboard() {
       if (search) params.search = search;
       if (category) params.category = category;
 
-      const res = await API.get("https://docuvault-4qyt.onrender.com/api/documents", { params });
+      const res = await API.get(API_ENDPOINTS.dashboardDocs, { params });
       setDocuments(res.data);
     } catch (err) {
       alert("Failed to fetch documents");
@@ -26,7 +27,7 @@ function Dashboard() {
   const deleteDocument = async (id) => {
     if (!window.confirm("Are you sure you want to delete this document?")) return;
     try {
-      await API.delete(`https://docuvault-4qyt.onrender.com/api/documents/${id}`);
+      await API.delete(API_ENDPOINTS.deleteDocuments(id));
       fetchDocuments();
     } catch (err) {
       alert("Delete failed");

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import API_ENDPOINTS from "../api/endpoint";
 
 function Upload() {
   const [form, setForm] = useState({
@@ -31,7 +32,7 @@ function Upload() {
 
   const fetchExistingDocs = async () => {
     try {
-      const res = await API.get("https://docuvault-4qyt.onrender.com/api/documents");
+      const res = await API.get(API_ENDPOINTS.dashboardDocs);
       setUploadedDocs(res.data);
     } catch (err) {
       console.error("Failed to fetch documents", err);
@@ -71,7 +72,7 @@ function Upload() {
     try {
       setUploading(true);
       setUploadTime(0);
-      await API.post("https://docuvault-4qyt.onrender.com/api/documents/upload", data, {
+      await API.post(API_ENDPOINTS.uploadDocs, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

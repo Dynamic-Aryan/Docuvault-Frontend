@@ -3,6 +3,7 @@ import { Search } from "lucide-react";
 import API from "../api/api";
 import DocumentCard from "../components/DocumentCard";
 import { useNavigate } from "react-router-dom";
+import API_ENDPOINTS from "../api/endpoint";
 
 export default function MyDocuments() {
   const [documents, setDocuments] = useState([]);
@@ -13,7 +14,7 @@ export default function MyDocuments() {
 
   const fetchDocs = async () => {
     try {
-      const res = await API.get("https://docuvault-4qyt.onrender.com/api/documents");
+      const res = await API.get(API_ENDPOINTS.dashboardDocs);
       setDocuments(res.data);
     } catch (error) {
       setDocuments([]);
@@ -28,7 +29,7 @@ export default function MyDocuments() {
 
   const handleDelete = async (id) => {
     try {
-      await API.delete(`https://docuvault-4qyt.onrender.com/api/documents/${id}`);
+      await API.delete(API_ENDPOINTS.deleteDocuments(id));
       setDocuments((docs) => docs.filter((doc) => doc._id !== id));
       setSuccessMessage("Document deleted successfully.");
     } catch (error) {

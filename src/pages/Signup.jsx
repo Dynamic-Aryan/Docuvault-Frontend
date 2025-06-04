@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../api/api";
+import API_ENDPOINTS from "../api/endpoint";
 
 function Signup() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -12,7 +13,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post("https://docuvault-4qyt.onrender.com/api/auth/signup", form);
+      await API.post(API_ENDPOINTS.signupUser, form);
       navigate("/login");
     } catch (err) {
       alert("Signup failed");
