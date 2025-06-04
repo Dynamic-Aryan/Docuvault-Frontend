@@ -6,14 +6,14 @@ import API_ENDPOINTS from "../api/endpoint";
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
+  const [notification, setNotification] = useState(null); // State for notification
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,12 +22,23 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       navigate("/");
     } catch (err) {
-      alert("Login failed");
+      setNotification("Login failed. Please check your credentials.");
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000); // Clear notification after 3 seconds
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black text-white animate-fadeIn">
+      {notification && (
+        <div className="absolute top-0 mt-5 w-full flex justify-center">
+          <div className="bg-red-500 py-2 px-4 rounded-md text-white">
+            {notification}
+          </div>
+        </div>
+      )}
+
       <form
         onSubmit={handleSubmit}
         className="bg-gray-800 p-8 rounded-3xl shadow-2xl w-full max-w-md"
