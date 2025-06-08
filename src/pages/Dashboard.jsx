@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import DocumentCard from "../components/DocumentCard";
 import API_ENDPOINTS from "../api/endpoint";
 
-function Dashboard() {
+const Dashboard = () => {
   const [documents, setDocuments] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
@@ -78,6 +78,6 @@ function Dashboard() {
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

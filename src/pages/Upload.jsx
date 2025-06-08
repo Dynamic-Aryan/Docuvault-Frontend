@@ -4,7 +4,7 @@ import API from "../api/api";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import API_ENDPOINTS from "../api/endpoint";
 
-function Upload() {
+const Upload = () => {
   const [form, setForm] = useState({
     title: "",
     category: "",
@@ -273,6 +273,6 @@ function Upload() {
       </div>
     </div>
   );
-}
+};
 
 export default Upload;

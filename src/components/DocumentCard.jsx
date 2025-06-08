@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function DocumentCard({ doc, onDelete }) {
+const DocumentCard = ({ doc, onDelete }) => {
   const [confirming, setConfirming] = useState(false);
 
   const handleDeleteClick = () => {
@@ -68,4 +68,6 @@ export default function DocumentCard({ doc, onDelete }) {
       </div>
     </div>
   );
-}
+};
+
+export default DocumentCard;

@@ -5,7 +5,7 @@ import DocumentCard from "../components/DocumentCard";
 import { useNavigate } from "react-router-dom";
 import API_ENDPOINTS from "../api/endpoint";
 
-export default function MyDocuments() {
+const MyDocuments = () => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -108,4 +108,6 @@ export default function MyDocuments() {
       )}
     </div>
   );
-}
+};
+
+export default MyDocuments;

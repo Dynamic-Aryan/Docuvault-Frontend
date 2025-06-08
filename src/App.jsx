@@ -14,10 +14,10 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated() ? children : <Navigate to="/login" />;
 };
 
-function App() {
+const App = () => {
   return (
     <Router>
-    <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -42,6 +42,6 @@ function App() {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
