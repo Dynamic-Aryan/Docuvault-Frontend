@@ -1,9 +1,29 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
-export default function Navbar() {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
+
+  // Auto-refresh authentication state on token change
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsAuthenticated(!!localStorage.getItem("token"));
+    };
+
+    // Check auth every second (helps in same-tab updates)
+    const interval = setInterval(checkAuth, 1000);
+
+    // Sync across tabs
+    const onStorageChange = () => checkAuth();
+    window.addEventListener("storage", onStorageChange);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("storage", onStorageChange);
+    };
+  }, []);
 
   return (
     <nav className="bg-gray-900 text-white px-6 py-4 shadow">
@@ -33,9 +53,11 @@ export default function Navbar() {
           <Link to="/upload" className="hover:underline">
             Upload
           </Link>
-          <Link to="/login" className="hover:underline">
-            Login
-          </Link>
+          {!isAuthenticated && (
+            <Link to="/login" className="hover:underline">
+              Login
+            </Link>
+          )}
         </div>
       </div>
 
@@ -51,11 +73,15 @@ export default function Navbar() {
           <Link to="/upload" className="hover:underline" onClick={() => setIsOpen(false)}>
             Upload
           </Link>
-          <Link to="/login" className="hover:underline" onClick={() => setIsOpen(false)}>
-            Login
-          </Link>
+          {!isAuthenticated && (
+            <Link to="/login" className="hover:underline" onClick={() => setIsOpen(false)}>
+              Login
+            </Link>
+          )}
         </div>
       )}
     </nav>
   );
-}
+};
+
+export default Navbar;
